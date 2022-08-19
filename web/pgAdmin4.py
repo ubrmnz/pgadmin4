@@ -12,6 +12,7 @@ a webserver, this will provide the WSGI interface, otherwise, we're going
 to start a web server."""
 
 import sys
+from platform import system
 from subprocess import run
 
 if sys.version_info < (3, 4):
@@ -172,13 +173,17 @@ def main():
     # Output a startup message if we're not under the runtime and startup.
     # If we're under WSGI, we don't need to worry about this
     if not app.PGADMIN_RUNTIME:
-        print(
-            "Launching %s. http://%s:%d in your browser." %
-            (config.APP_NAME, config.DEFAULT_SERVER,
-             config.EFFECTIVE_SERVER_PORT)
-        )
-        run(['xdg-open', 'http://localhost:5050'])
-        sys.stdout.flush()
+        if system() == 'Linux':
+            print(
+                    "Launching %s. http://%s:%d in your browser." %
+                    (config.APP_NAME, config.DEFAULT_SERVER,
+                        config.EFFECTIVE_SERVER_PORT)
+                    )
+            run(['xdg-open', 'http://localhost:5050'])
+        else:
+            print("Starting %s. Please navigate to http://%s:%d in your browser." %
+                    (config.APP_NAME, config.DEFAULT_SERVER, config.EFFECTIVE_SERVER_PORT))
+            sys.stdout.flush()
     else:
         # For unknown reason the runtime does not pass the environment
         # variables (i.e. PYTHONHOME, and PYTHONPATH), to the Python
