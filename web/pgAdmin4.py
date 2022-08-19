@@ -11,8 +11,8 @@
 a webserver, this will provide the WSGI interface, otherwise, we're going
 to start a web server."""
 
-
 import sys
+from subprocess import run
 
 if sys.version_info < (3, 4):
     raise RuntimeError('This application must be run under Python 3.4 '
@@ -173,10 +173,11 @@ def main():
     # If we're under WSGI, we don't need to worry about this
     if not app.PGADMIN_RUNTIME:
         print(
-            "Starting %s. Please navigate to http://%s:%d in your browser." %
+            "Launching %s. http://%s:%d in your browser." %
             (config.APP_NAME, config.DEFAULT_SERVER,
              config.EFFECTIVE_SERVER_PORT)
         )
+        run(['xdg-open', 'http://localhost:5050'])
         sys.stdout.flush()
     else:
         # For unknown reason the runtime does not pass the environment
