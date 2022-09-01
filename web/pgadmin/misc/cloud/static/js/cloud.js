@@ -84,7 +84,7 @@ define('pgadmin.misc.cloud', [
         const axiosApi = getApiInstance();
         let _url = url_for('cloud.clear_cloud_session');
         axiosApi.post(_url)
-          .then(() => {})
+          .then(() => {/*This is intentional (SonarQube)*/})
           .catch((error) => {
             Notifier.error(gettext(`Error while clearing cloud wizard data: ${error.response.data.errormsg}`));
           });
@@ -94,6 +94,7 @@ define('pgadmin.misc.cloud', [
         <Theme>
           <CloudWizard nodeInfo={info} nodeData={d}
             onClose={() => {
+              ReactDOM.unmountComponentAtNode(j[0]);
               panel.close();
             }}/>
         </Theme>, j[0]);

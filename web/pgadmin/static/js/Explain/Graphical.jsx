@@ -295,7 +295,7 @@ function PlanSVG({planData, zoomFactor, fitZoomFactor, ...props}) {
   }, [planData.width]);
 
   return (
-    <svg height={planData.height*zoomFactor} width={planData.width*zoomFactor} version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <svg height={planData.height*zoomFactor} width={planData.width*zoomFactor} version="1.1" xmlns="https://www.w3.org/2000/svg">
       <defs>
         {Object.keys(props.ctx.arrows).map((arr_id, i)=>{
           let arrowPoints = [
@@ -387,7 +387,7 @@ export default function Graphical({planData, ctx}) {
 
   const onDownloadClick = ()=>{
     downloadSvg(ReactDOMServer.renderToStaticMarkup(
-      <PlanSVG planData={planData} download={true} ctx={ctx} zoomFactor={INIT_ZOOM_FACTOR} onNodeClick={()=>{}}/>
+      <PlanSVG planData={planData} download={true} ctx={ctx} zoomFactor={INIT_ZOOM_FACTOR} onNodeClick={()=>{/*This is intentional (SonarQube)*/}}/>
     ), 'explain_plan_' + (new Date()).getTime() + '.svg');
   };
 
